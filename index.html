@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Range Calculator</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(to bottom, #f7f7f7, #ffffff);
+        }
+        .hero {
+            height: 100vh;
+            background-image: linear-gradient(to bottom, #fff, #f7f7f7);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            font-family: 'Pacifico', cursive;
+        }
+        .hero p {
+            font-size: 24px;
+            color: #666;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #fff;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .countdown {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+        }
+        .countdown span {
+            font-size: 24px;
+            color: #666;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Date Range Calculator</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#result">Result</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="hero">
+        <h1>Welcome to Date Range Calculator</h1>
+        <p>Calculate the difference between two dates</p>
+    </div>
+    <div class="container mt-5 p-5">
+        <h1 class="header">Date Range Calculator</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-calendar2-date"></i></span>
+                    <input type="date" class="form-control" id="startDate" required placeholder="Start Date">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2"><i class="bi bi-calendar2-date"></i></span>
+                    <input type="date" class="form-control" id="endDate" required placeholder="End Date">
+                </div>
+                <button type="button" class="btn btn-primary w-100" id="calculate-btn">Calculate <i class="bi bi-calculator"></i></button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-6">
+                <h2>Countdown to New Year</h2>
+                <div class="countdown" id="countdown"></div>
+            </div>
+        </div>
+    </div>
+    <div id="result" class="container mt-5 p-5">
+        <h1 class="header">Result</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card bg-light">
+                    <div class="card-header">Years</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="years"></h5>
+                        <i class="bi bi-calendar2-date display-1 text-primary"></i>
+                    </div>
+                </div>
+                <div class="card bg-light mt-3">
+                    <div class="card-header">Months</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="months"></h5>
+                        <i class="bi bi-calendar2-minus display-1 text-primary"></i>
+                    </div>
+                </div>
+                <div class="card bg-light mt-3">
+                    <div class="card-header">Days</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="days"></h5>
+                        <i class="bi bi-sun display-1 text-warning"></i>
+                    </div>
+                </div>
+                <div class="card bg-light mt-3">
+                    <div class="card-header">Hours</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="hours"></h5>
+                        <i class="bi bi-clock display-1 text-success"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="result-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Calculation Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-header">Years</div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="modal-years"></h5>
+                                    <i class="bi bi-calendar2-date display-1 text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-header">Months</div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="modal-months"></h5>
+                                    <i class="bi bi-calendar2-minus display-1 text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-header">Days</div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="modal-days"></h5>
+                                    <i class="bi bi-sun display-1 text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card bg-light">
+                                <div class="card-header">Hours</div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="modal-hours"></h5>
+                                    <i class="bi bi-clock display-1 text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="footer">
+        <p>&copy; 2024 Date Range Calculator</p>
+        <p>Contact Us: <a href="mailto:Rahul12345@gmail.com">Rahul12345@gmail.com</a></p>
+        <p>Follow Us: <a href="#" target="_blank">Twitter</a> | <a href="#" target="_blank">Facebook</a> | <a href="#" target="_blank">Instagram</a></p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const calculateBtn = document.getElementById('calculate-btn');
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        const yearsElement = document.getElementById('years');
+        const monthsElement = document.getElementById('months');
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const modalYearsElement = document.getElementById('modal-years');
+        const modalMonthsElement = document.getElementById('modal-months');
+        const modalDaysElement = document.getElementById('modal-days');
+        const modalHoursElement = document.getElementById('modal-hours');
+        const resultModal = new bootstrap.Modal(document.getElementById('result-modal'));
+        const countdownElement = document.getElementById('countdown');
+
+        function updateCountdown() {
+            const now = new Date();
+            const newYear = new Date(now.getFullYear() + 1, 0, 1);
+            const diff = Math.abs(newYear.getTime() - now.getTime());
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            countdownElement.innerHTML = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        calculateBtn.addEventListener('click', () => {
+            const startDate = new Date(startDateInput.value);
+            const endDate = new Date(endDateInput.value);
+
+            const totalSeconds = Math.abs((endDate.getTime() - startDate.getTime()) / 1000);
+            const years = Math.floor(totalSeconds / (60 * 60 * 24 * 365));
+            const remainingSeconds = totalSeconds % (60 * 60 * 24 * 365);
+            const months = Math.floor(remainingSeconds / (60 * 60 * 24 * 30));
+            const remainingSeconds2 = remainingSeconds % (60 * 60 * 24 * 30);
+            const days = Math.floor(remainingSeconds2 / (60 * 60 * 24));
+            const remainingSeconds3 = remainingSeconds2 % (60 * 60 * 24);
+            const hours = Math.floor(remainingSeconds3 / (60 * 60));
+
+            yearsElement.textContent = `Years: ${years}`;
+            monthsElement.textContent = `Months: ${months}`;
+            daysElement.textContent = `Days: ${days}`;
+            hoursElement.textContent = `Hours: ${hours}`;
+
+            modalYearsElement.textContent = `Years: ${years}`;
+            modalMonthsElement.textContent = `Months: ${months}`;
+            modalDaysElement.textContent = `Days: ${days}`;
+            modalHoursElement.textContent = `Hours: ${hours}`;
+
+            resultModal.show();
+        });
+    </script>
+</body>
+</html>
